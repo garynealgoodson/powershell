@@ -1,11 +1,13 @@
-﻿# Connect to Exchange Online
-Connect-ExchangeOnline
+# Purpose
+# Connect to Exchange Online and performs a message trace for every day over the past 90 days to identify the most frequent senders into the tenant, which can then be used to help pre-seed a whitelist when onboarding third party email filtering solution 
+# There are limits of the Get-MessageTraceV2 cmdlet!
+# Maximum historical depth: 90 days
+# Maximum query window per request: 10 days
+# Maximum results per query: 5000 (script will not handled more than 5000 emails daily)
+# Throttling: 100 queries per 5-minute window 
 
-#✅ Summary of Limits - This are the limits of the Get-MessageTraceV2 cmdlet!
-#Maximum historical depth: 90 days
-#Maximum query window per request: 10 days
-#Maximum results per query: 5000
-#Throttling: 100 queries per 5-minute window
+# Connect to Exchange Online
+Connect-ExchangeOnline
 
 # Define date range: last 90 days
 $fullStartDate = (Get-Date).AddDays(-90)
@@ -59,3 +61,4 @@ $domainCounts | Export-Csv -Path $csvPath -NoTypeInformation
 
 # Disconnect session
 Disconnect-ExchangeOnline
+
